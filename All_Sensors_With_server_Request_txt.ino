@@ -72,7 +72,7 @@ void setup(){
 void loop () {
 
  digitalWrite(ledPIN, LOW);  
-  delay(100);
+  delay(1000);
 
     movementSensorStatus = digitalRead(movementSwichPIN);
     lightSensorStatus = analogRead(lightSensorSwichPIN);  
@@ -114,6 +114,7 @@ void loop () {
   
   
    Serial.print(lightSensorStatus - 500);     
+ delay(1000);
   if((lightSensorStatus - 500) < 470)                     //light sensor if() for debug.
   {                                                      // kanonikes sinthikes dwmatiou einai  420 - 480 (MAX 500)
      Serial.print("                 light LOW"); 
@@ -133,7 +134,7 @@ void loop () {
 /* Serial.print(magneticSwichStatus);    // DEBUG
  Serial.print(" ");    // DEBUG
   Serial.print(magneticSwichStatus - 1021);    // DEBUG
-
+ delay(1000);
 if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
   {
   //   digitalWrite(ledPIN, HIGH);
@@ -149,7 +150,7 @@ if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
 */  
  
  
-       
+        delay(1500);
         if (movementStatusToURL >0 || lightStatusToURL > 0) // || magnetStatusToURL > 0)  //elegxos ena einai kapoio apo ta sensors energopoiimeno
         {                                                                                 // wste na stalthei to URL aitima sto Server
          // start the Ethernet connection:
