@@ -102,6 +102,7 @@ void loop () {
   {
    Serial.print("movement HIGH");
    digitalWrite(ledPIN, HIGH);  
+   delay(150);
    server.write("movement HIGH MESSAGE");
       server.write("\n");
      movementStatusToURL = 1;
@@ -114,7 +115,7 @@ void loop () {
   
   
    Serial.print(lightSensorStatus - 500);     
- delay(1000);
+ delay(500);
   if((lightSensorStatus - 500) < 470)                     //light sensor if() for debug.
   {                                                      // kanonikes sinthikes dwmatiou einai  420 - 480 (MAX 500)
      Serial.print("                 light LOW"); 
@@ -124,6 +125,7 @@ void loop () {
   else
   {
    digitalWrite(ledPIN, HIGH);
+   delay(150);
    Serial.print("                light HIGH"); 
    server.write("light HIGH MESSAGE");
    server.write("\n");
@@ -138,6 +140,7 @@ void loop () {
 if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
   {
   //   digitalWrite(ledPIN, HIGH);
+    delay(150);
    Serial.print("                                  magnet HIGH\n");  
    params[] = params[] + "/1"
   magnetStatusToURL = 1;  
