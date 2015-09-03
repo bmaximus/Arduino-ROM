@@ -142,13 +142,13 @@ void loop () {
 		//   digitalWrite(ledPIN, HIGH);
 		delay(150);
 		Serial.print("                                  magnet HIGH\n");  
-		params[] = params[] + "/1"
+		//params[] = params[] + "/1"
 		magnetStatusToURL = 1;  
 		}
 		else
 		{
 			Serial.print("                                  magnet LOW\n"); 
-			params[] = params[] + "/0"
+			//params[] = params[] + "/0"
 			magnetStatusToURL = 0;    
 		}  
   
