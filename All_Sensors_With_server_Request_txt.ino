@@ -115,13 +115,13 @@ void loop () {
   
   
    Serial.print(lightSensorStatus - 500);     
- delay(500);
-  if((lightSensorStatus - 500) < 470)                     //light sensor if() for debug.
-  {                                                      // kanonikes sinthikes dwmatiou einai  420 - 480 (MAX 500)
+   delay(500);
+   if((lightSensorStatus - 500) < 470)                     //light sensor if() for debug.
+   {                                                      // kanonikes sinthikes dwmatiou einai  420 - 480 (MAX 500)
      Serial.print("                 light LOW"); 
     lightStatusToURL = 0;
    
-  }
+   }
   else
   {
    digitalWrite(ledPIN, HIGH);
@@ -133,28 +133,29 @@ void loop () {
    }
    Serial.print("\n");   
  
-/* Serial.print(magneticSwichStatus);    // DEBUG
- Serial.print(" ");    // DEBUG
-  Serial.print(magneticSwichStatus - 1021);    // DEBUG
- delay(1000);
-if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
-  {
-  //   digitalWrite(ledPIN, HIGH);
-    delay(150);
-   Serial.print("                                  magnet HIGH\n");  
-   params[] = params[] + "/1"
-  magnetStatusToURL = 1;  
-}
-  else{
-   Serial.print("                                  magnet LOW\n"); 
-   params[] = params[] + "/0"
- magnetStatusToURL = 0;    
-}  
-*/  
+   Serial.print(magneticSwichStatus);    // DEBUG
+   Serial.print(" ");    // DEBUG
+   Serial.print(magneticSwichStatus - 1021);    // DEBUG
+   delay(1000);
+		if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
+		{
+		//   digitalWrite(ledPIN, HIGH);
+		delay(150);
+		Serial.print("                                  magnet HIGH\n");  
+		params[] = params[] + "/1"
+		magnetStatusToURL = 1;  
+		}
+		else
+		{
+			Serial.print("                                  magnet LOW\n"); 
+			params[] = params[] + "/0"
+			magnetStatusToURL = 0;    
+		}  
+  
  
  
         delay(1500);
-        if (movementStatusToURL >0 || lightStatusToURL > 0) // || magnetStatusToURL > 0)  //elegxos ena einai kapoio apo ta sensors energopoiimeno
+        if (movementStatusToURL >0 || lightStatusToURL > 0 || magnetStatusToURL > 0)  //elegxos ena einai kapoio apo ta sensors energopoiimeno
         {                                                                                 // wste na stalthei to URL aitima sto Server
          // start the Ethernet connection:
          if (Ethernet.begin(mac) == 0) 
@@ -169,57 +170,54 @@ if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
             if (client.connect(service, 8080)) {                                  //elegxos ean i sindesi itan success me ton server
             Serial.println("connected");                                          //se mia sigkekrimeni thira
            
-             //if(movementStatusToURL == 0 && lightStatusToURL == 0 && magnetStatusToURL == 1)    //magnetic siwtch enabled case
-             //{                                                                                  //parentheseis mesa sta IF
-             //   client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/0/0/1");    //0.0.1 
-             //   Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/0/0/1");
-             //}
-              if(movementStatusToURL == 0 && lightStatusToURL == 1) // && magnetStatusToURL == 0)
+             if(movementStatusToURL == 0 && lightStatusToURL == 0 && magnetStatusToURL == 1)   
+             {                                                                                  
+                client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/0/0/1");    //0.0.1 
+                Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/0/0/1");
+             }
+              if(movementStatusToURL == 0 && lightStatusToURL == 1 && magnetStatusToURL == 0)
              {    
                 client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/0/1/0");      //0.1.0 
                 Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/0/1/0");
              }
-             //if(movementStatusToURL == 0 && lightStatusToURL == 1 && (magnetStatusToURL == 1))  
-             //{
-             //   client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/0/1/1");    //0.1.1 
-             //   Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/0/1/1");
-             //}
-             
-            if(movementStatusToURL == 1  && lightStatusToURL==0)  // && magnetStatusToURL == 0) 
+             if(movementStatusToURL == 0 && lightStatusToURL == 1 && magnetStatusToURL == 1)  
+             {
+                client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/0/1/1");    //0.1.1 
+                Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/0/1/1");
+             }
+             if(movementStatusToURL == 1  && lightStatusToURL==0  && magnetStatusToURL == 0) 
              {
                 client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/0/0");      //1.0.0 
                 Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/0/0");
              }
-             //if(movementStatusToURL == 1 && lightStatusToURL == 0 && magnetStatusToURL == 1) 
-             //{
-             //   client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/0/1");    //1.0.1 
-             //   Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/0/1");
-             //}
-             if(movementStatusToURL == 1 && lightStatusToURL == 1) //&& (magnetStatusToURL == 0)) 
+             if(movementStatusToURL == 1 && lightStatusToURL == 0 && magnetStatusToURL == 1) 
+             {
+                client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/0/1");    //1.0.1 
+                Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/0/1");
+             }
+             if(movementStatusToURL == 1 && lightStatusToURL == 1 && magnetStatusToURL == 0) 
              {
                 client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/1/0");      //1.1.0 
                 Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/1/0");
              }
-                     
-             //if(movementStatusToURL == 1 && lightStatusToURL == 0 && magnetStatusToURL == 1) 
-             //{
-             //   client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/1/1");    //1.1.1 
-             //   Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/1/1");
-             //}
-             
+             if(movementStatusToURL == 1 && lightStatusToURL == 0 && magnetStatusToURL == 1) 
+             {
+                client.println("GET   /ArduinoRestService/rest/setvaluesfromarduino/1/1/1");    //1.1.1 
+                Serial.println("/ArduinoRestService/rest/setvaluesfromarduino/1/1/1");
+             }
+            
             client.println("Host: http://83.212.84.224:8080");
             Serial.println("Host: http://83.212.84.224:8080");
             client.println("Connection: close");
             Serial.println("Connection: close");
             client.println();
             Serial.println("Exit");
-      } 
+		 
         
         
         if (client.available()) { char c = client.read();
-        Serial.print(c);
-        Serial.print("lololol");
-    }
+			Serial.print(c);        
+			}
   
     if (!client.connected()) 
     {
@@ -230,5 +228,6 @@ if((magneticSwichStatus - 1022) < 0)                   //MAGNET SENSOR if
      }
    
     
-}
+		}
+		}
 }
